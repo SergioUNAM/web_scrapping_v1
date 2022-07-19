@@ -6,7 +6,6 @@ import re
 
 amazon = 'https://www.amazon.com.mx/Apple-Audifonos-Inalambricos-AirPods-Estuche/dp/B07RK58K76/ref=sr_1_3?crid=1UWV89KRWIZ5E&keywords=airpods&qid=1657215150&refinements=p_89%3AApple&rnid=11790855011&s=electronics&sprefix=ai%2Caps%2C104&sr=1-3&ufe=app_do%3Aamzn1.fos.713a5ea8-28c8-4756-9a04-20c241c6dc4c'
 
-ishop_mixup = 'https://www.ishopmixup.com/airpods-estuche-carga/p'
 liverpool = 'https://www.liverpool.com.mx/tienda/pdp/Apple-AirPods-con-estuche-de-carga/1082662576?skuId=1082662576'
 sears = 'https://www.sears.com.mx/producto/190133/airpods-con-estuche-de-carga/'
 palacio_hierro = 'https://www.elpalaciodehierro.com/apple-apple-airpods-con-estuche-de-carga-40044132.html'
@@ -14,6 +13,14 @@ sanborns = 'https://www.sanborns.com.mx/producto/65189/audifonos-airpods-apple/'
 
 
 # fuentes = [mercado_libre, amazon, apple, ishop_mixup, liverpool, sears, palacio_hierro, sanborns]
+
+# Función que escribe en un archivo html el resultado de la consulta para poder visualizarlo
+
+def archivo(soup):
+    f = open('soup.html', 'w')
+    f.write(str(soup))
+    f.close()
+
 
 # Función que genera la solicitud de la pagina web y retorna un objeto soup
 def request(url):
@@ -60,9 +67,20 @@ def precio_apple():
     return precio
 
 
+def precio_ishop():
+    url_ishop = 'https://www.ishopmixup.com/airpods-estuche-carga/p'
+    request_ishop = request(url_ishop)
+
+    # Iniciamos la búsqueda particular
+    # print(request_ishop.prettify())
+    # search_in_soup = request_ishop.find('meta', attrs={'property': 'property="product:price:amount'})
+    archivo(request_ishop.prettify())
+
+
 def run():
     precio_ml()
     precio_apple()
+    #precio_ishop()
 
 
 if __name__ == '__main__':
