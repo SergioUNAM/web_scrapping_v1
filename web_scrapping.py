@@ -43,12 +43,11 @@ def precio_ml():  # Funcion que obtiene el precio en mercado libre
 
     request_ml = request(url_mercado_libre)  # Llamamos a la función request para realizar la consulta de mercado libre
 
-    search_in_soup = request_ml.find('span', attrs={
+    search_in_soup = str(request_ml.find('span', attrs={
         'class': 'andes-money-amount ui-pdp-price__part andes-money-amount--cents-superscript andes-money-amount--compact'}).find(
-        'span', attrs={'class': 'andes-visually-hidden'})
-
-    s_precio = search_in_soup.get_text()  # Devuelve el texto dentro del objeto p (bs4Soup)
-    precio = float(re.findall('\d+', s_precio)[0])  # Obtiene el precio como un flotante
+        'span', attrs={'class': 'andes-visually-hidden'}).get_text())
+    # Devuelve el texto dentro del objeto p (bs4Soup)
+    precio = float(re.findall('\d+', search_in_soup)[0])  # Obtiene el precio como un flotante
     print(f'El precio en mercado libre es de: ${precio}')
     return precio
 
@@ -57,12 +56,13 @@ def precio_apple():
     url_apple = 'https://www.apple.com/mx/shop/product/MV7N2BE/A/airpods-con-estuche-de-carga'
     request_apple = request(url_apple)  # Llamamos a la función request para realizar la consulta de la página de apple
 
-    search_in_soup = request_apple.find('script', attrs={'type': 'application/ld+json'}).get_text()
+    search_in_soup = str(request_apple.find('script', attrs={
+        'type': 'application/ld+json'}).get_text())  # Guarda la busqueda y la transforma de un objeto bs4 a un str
     # Hacemos la búsqueda con expresiones regulares, ya que el precio no se encuentra dentro de una etiqueta html, sino en un script json
-    patron = re.compile(r'\bprice":\b')  # Busca la el texto "price"
-    s_search_in_soup = str(search_in_soup)
-    inicio = patron.search(s_search_in_soup).end()
-    precio = float(s_search_in_soup[inicio:inicio + 7])
+    patron = re.compile(r'\bprice":\b')  # Genera el patron que se desea buscar
+    inicio = patron.search(
+        search_in_soup).end()  # Retorna la posicion final donde localiza a el patron dentro de la cadena s_search_in_soup
+    precio = float(search_in_soup[inicio:inicio + 5])
     print(f'El precio en la página oficial de Apple es de: ${precio}')
     return precio
 
@@ -72,15 +72,21 @@ def precio_ishop():
     request_ishop = request(url_ishop)
 
     # Iniciamos la búsqueda particular
-    # print(request_ishop.prettify())
-    # search_in_soup = request_ishop.find('meta', attrs={'property': 'property="product:price:amount'})
-    archivo(request_ishop.prettify())
+    search_in_soup = str(request_ishop.find('script', attrs={
+        'type': 'application/ld+json'}).get_text())  # Guarda la busqueda y la transforma de un objeto bs4 a un str
+    patron = re.compile(r'\bprice":\b')  # Genera el patron que se desea buscar
+    inicio = patron.search(search_in_soup).end()
+    precio = float(search_in_soup[inicio:inicio + 4])
+    print(f"El precio en ishop es de: ${precio}")
+    return precio
+
+    # archivo(request_ishop.prettify())
 
 
 def run():
     precio_ml()
     precio_apple()
-    #precio_ishop()
+    precio_ishop()
 
 
 if __name__ == '__main__':
