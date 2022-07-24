@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+from datetime import datetime
 
 
 # Función que escribe en un archivo html el resultado de la consulta para poder visualizarlo
@@ -53,7 +54,7 @@ def precio_apple():
     inicio = patron.search(
         search_in_soup).end()  # Retorna la posicion final donde localiza el patrón generado dentro de la cadena s_search_in_soup
     precio = float(search_in_soup[inicio:inicio + 5])
-    #print(f'El precio en la página oficial de Apple es de: ${precio}')
+    # print(f'El precio en la página oficial de Apple es de: ${precio}')
     return precio
 
 
@@ -87,18 +88,26 @@ def precio_ph():
     return precio
 
 
-def analisis_precios():
+def escritura_archivo_precios():
     mercado_libre = precio_ml()
     apple = precio_apple()
     ishop = precio_ishop()
     palacio_hierro = precio_ph()
 
-    lista_precios = [mercado_libre, apple, ishop, palacio_hierro]
-    print(lista_precios)
+    fh_consulta = datetime.now()  # fecha y hora de consulta
+    fecha = str(fh_consulta.date())
+    hora = str(fh_consulta.strftime("%H:%M:%S"))
+    # print(f"fecha: {fecha} y hora: {hora}")
+
+    lista_precios = [fecha, ", ", hora, ", ", mercado_libre, ", ", ", ", ishop, ", ", palacio_hierro, "\n"]
+
+    for dato in lista_precios:
+        with open("/Users/sergiocastelarfernandez/Documents/scripts varios python/track_precios.txt", "a") as file:
+            file.write(str(dato))
 
 
 def run():
-    analisis_precios()
+    escritura_archivo_precios()
 
 
 if __name__ == '__main__':
