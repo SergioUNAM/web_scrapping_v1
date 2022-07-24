@@ -2,10 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-sanborns = 'https://www.sanborns.com.mx/producto/65189/audifonos-airpods-apple/'
-
-
-# fuentes = [mercado_libre, amazon, apple, ishop_mixup, liverpool, sears, palacio_hierro, sanborns]
 
 # Función que escribe en un archivo html el resultado de la consulta para poder visualizarlo
 def archivo(soup):
@@ -24,7 +20,7 @@ def request(url):
         print(page_request.status_code)
         return "error"
 
-    print(f'status code: {page_request.status_code}')
+    # print(f'status code: {page_request.status_code}')
     soup = BeautifulSoup(page_request.text, 'html.parser')  # Genera un objeto soup
     return soup
 
@@ -41,7 +37,7 @@ def precio_ml():  # Funcion que obtiene el precio en mercado libre
         'span', attrs={'class': 'andes-visually-hidden'}).get_text())
     # Devuelve el texto dentro del objeto p (bs4Soup)
     precio = float(re.findall('\d+', search_in_soup)[0])  # Obtiene el precio como un flotante
-    print(f'El precio en mercado libre es de: ${precio}')
+    # print(f'El precio en mercado libre es de: ${precio}')
     return precio
 
 
@@ -57,7 +53,7 @@ def precio_apple():
     inicio = patron.search(
         search_in_soup).end()  # Retorna la posicion final donde localiza el patrón generado dentro de la cadena s_search_in_soup
     precio = float(search_in_soup[inicio:inicio + 5])
-    print(f'El precio en la página oficial de Apple es de: ${precio}')
+    #print(f'El precio en la página oficial de Apple es de: ${precio}')
     return precio
 
 
@@ -73,7 +69,7 @@ def precio_ishop():
     patron = re.compile(r'\bprice":\b')  # Genera el patron que se desea buscar
     inicio = patron.search(search_in_soup).end()
     precio = float(search_in_soup[inicio:inicio + 4])
-    print(f"El precio en ishop es de: ${precio}")
+    # print(f"El precio en ishop es de: ${precio}")
     return precio
 
 
@@ -86,16 +82,23 @@ def precio_ph():
     precio = ""
     for p in l_precio[0:2]:
         precio = precio + p
-    float(precio)
-    print(f"El precio en Palacio de Hierro es de: ${precio}")
+    precio = float(precio)
+    # print(f"El precio en Palacio de Hierro es de: ${precio}")
     return precio
 
 
+def analisis_precios():
+    mercado_libre = precio_ml()
+    apple = precio_apple()
+    ishop = precio_ishop()
+    palacio_hierro = precio_ph()
+
+    lista_precios = [mercado_libre, apple, ishop, palacio_hierro]
+    print(lista_precios)
+
+
 def run():
-    precio_ml()  # Funciona
-    precio_apple()  # Funciona
-    precio_ishop()  # Funciona
-    precio_ph()
+    analisis_precios()
 
 
 if __name__ == '__main__':
