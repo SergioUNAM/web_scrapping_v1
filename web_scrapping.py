@@ -104,6 +104,7 @@ def escritura_archivo_precios():
     for dato in lista_precios:
         with open("/Users/sergiocastelarfernandez/Documents/scripts varios python/track_precios.txt", "a") as file:
             file.write(str(dato))
+    print("El archivo ha sido actualizado")
 
 
 def run():
