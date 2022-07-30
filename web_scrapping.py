@@ -99,7 +99,7 @@ def escritura_archivo_precios():
     hora = str(fh_consulta.strftime("%H:%M:%S"))
     # print(f"fecha: {fecha} y hora: {hora}")
 
-    lista_precios = [fecha, ", ", hora, ", ", mercado_libre, ", ", ", ", ishop, ", ", palacio_hierro, "\n"]
+    lista_precios = [fecha, ", ", hora, ", ", mercado_libre, ", ", apple, ", ", ishop, ", ", palacio_hierro, "\n"]
 
     for dato in lista_precios:
         with open("/Users/sergiocastelarfernandez/Documents/scripts varios python/track_precios.txt", "a") as file:
