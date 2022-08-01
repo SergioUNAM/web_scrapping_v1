@@ -88,7 +88,16 @@ def precio_ph():
     return precio
 
 
+def precio_amazon():
+    # Funcion para ingresar de forma manual el precio en el sitio de amazon
+    # https://www.amazon.com.mx/Apple-Audifonos-Inalambricos-AirPods-Estuche/dp/B07RK58K76/ref=sr_1_3?crid=1UWV89KRWIZ5E&keywords=airpods&qid=1657215150&refinements=p_89%3AApple&rnid=11790855011&s=electronics&sprefix=ai%2Caps%2C104&sr=1-3&ufe=app_do%3Aamzn1.fos.713a5ea8-28c8-4756-9a04-20c241c6dc4c
+    precio: float = float(input("Digite el precio: "))
+    return precio
+
+
 def escritura_archivo_precios():
+    # Funcion que llama a las distintas funciones que obtienen el valor del producto
+    amazon = precio_amazon()
     mercado_libre = precio_ml()
     apple = precio_apple()
     ishop = precio_ishop()
@@ -97,9 +106,8 @@ def escritura_archivo_precios():
     fh_consulta = datetime.now()  # fecha y hora de consulta
     fecha = str(fh_consulta.date())
     hora = str(fh_consulta.strftime("%H:%M:%S"))
-    # print(f"fecha: {fecha} y hora: {hora}")
 
-    lista_precios = [fecha, ", ", hora, ", ", mercado_libre, ", ", apple, ", ", ishop, ", ", palacio_hierro, "\n"]
+    lista_precios = [fecha, ", ", hora, ", ", mercado_libre, ", ", amazon, ", ", apple, ", ", ishop, ", ", palacio_hierro, "\n"]
 
     for dato in lista_precios:
         with open("/Users/sergiocastelarfernandez/Documents/scripts varios python/track_precios.txt", "a") as file:
