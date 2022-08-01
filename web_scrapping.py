@@ -4,15 +4,17 @@ import re
 from datetime import datetime
 
 
-# Función que escribe en un archivo html el resultado de la consulta para poder visualizarlo
 def archivo(soup):
+    # Función que escribe en un archivo html el resultado de la consulta para poder visualizarlo
+
     f = open('soup.html', 'w')
     f.write(str(soup.prettify()))
     f.close()
 
 
-# Función que genera la solicitud de la página web y retorna un objeto soup
 def request(url):
+    # Función que genera la solicitud de la página web y retorna un objeto soup
+
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) '
                       'Chrome/50.0.2661.102 Safari/537.36'}
@@ -26,8 +28,8 @@ def request(url):
     return soup
 
 
-# Función que retorna el precio en mercado libre
-def precio_ml():  # Funcion que obtiene el precio en mercado libre
+def precio_ml():
+    # Funcion que obtiene el precio en mercado libre
 
     url_mercado_libre = 'https://www.mercadolibre.com.mx/apple-airpods-con-estuche-de-carga-blanco/p/MLM15914456?hide_psmb=true#reco_item_pos=0&reco_backend=best-seller&reco_backend_type=low_level&reco_client=highlights-rankings&reco_id=0f8a0e0d-0157-4194-8c5a-403f14435d7c&tendency_print_id=74bbbcf3-df2c-4a1c-a28b-ed6777faa694'
 
@@ -42,8 +44,9 @@ def precio_ml():  # Funcion que obtiene el precio en mercado libre
     return precio
 
 
-# Función que retorna el precio de la página oficial de apple
 def precio_apple():
+    # Función que retorna el precio de la página oficial de apple
+
     url_apple = 'https://www.apple.com/mx/shop/product/MV7N2BE/A/airpods-con-estuche-de-carga'
     request_apple = request(url_apple)  # Llamamos a la función request para realizar la consulta de la página de apple
 
@@ -58,8 +61,9 @@ def precio_apple():
     return precio
 
 
-# Función que retorna el precio de ishopmixup.com
 def precio_ishop():
+    # Función que retorna el precio de ishopmixup.com
+
     url_ishop = 'https://www.ishopmixup.com/airpods-estuche-carga/p'
     request_ishop = request(url_ishop)
 
@@ -75,6 +79,8 @@ def precio_ishop():
 
 
 def precio_ph():
+    # Funcion que retorna el precio de palacio de hierro
+
     url_ph = 'https://www.elpalaciodehierro.com/apple-apple-airpods-con-estuche-de-carga-40044132.html'
     request_ph = request(url_ph)
     search_in_soup = str(request_ph.find("span", attrs={"class": "b-product_price-value"}).get_text())
@@ -97,6 +103,7 @@ def precio_amazon():
 
 def escritura_archivo_precios():
     # Funcion que llama a las distintas funciones que obtienen el valor del producto
+
     amazon = precio_amazon()
     mercado_libre = precio_ml()
     apple = precio_apple()
@@ -107,7 +114,8 @@ def escritura_archivo_precios():
     fecha = str(fh_consulta.date())
     hora = str(fh_consulta.strftime("%H:%M:%S"))
 
-    lista_precios = [fecha, ", ", hora, ", ", mercado_libre, ", ", amazon, ", ", apple, ", ", ishop, ", ", palacio_hierro, "\n"]
+    lista_precios = [fecha, ", ", hora, ", ", mercado_libre, ", ", amazon, ", ", apple, ", ", ishop, ", ",
+                     palacio_hierro, "\n"]
 
     for dato in lista_precios:
         with open("/Users/sergiocastelarfernandez/Documents/scripts varios python/track_precios.txt", "a") as file:
