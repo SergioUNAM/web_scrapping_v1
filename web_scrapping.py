@@ -97,7 +97,7 @@ def precio_ph():
 def precio_amazon():
     # Funcion para ingresar de forma manual el precio en el sitio de amazon
     # https://www.amazon.com.mx/Apple-Audifonos-Inalambricos-AirPods-Estuche/dp/B07RK58K76/ref=sr_1_3?crid=1UWV89KRWIZ5E&keywords=airpods&qid=1657215150&refinements=p_89%3AApple&rnid=11790855011&s=electronics&sprefix=ai%2Caps%2C104&sr=1-3&ufe=app_do%3Aamzn1.fos.713a5ea8-28c8-4756-9a04-20c241c6dc4c
-    precio: float = float(input("Digite el precio: "))
+    precio: float = float(input("Digite el precio de amazon: "))
     return precio
 
 
