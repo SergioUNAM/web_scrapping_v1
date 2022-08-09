@@ -40,7 +40,6 @@ def precio_ml():
         'span', attrs={'class': 'andes-visually-hidden'}).get_text())
     # Devuelve el texto dentro del objeto p (bs4Soup)
     precio = float(re.findall('\d+', search_in_soup)[0])  # Obtiene el precio como un flotante
-    # print(f'El precio en mercado libre es de: ${precio}')
     return precio
 
 
@@ -57,7 +56,6 @@ def precio_apple():
     inicio = patron.search(
         search_in_soup).end()  # Retorna la posicion final donde localiza el patrón generado dentro de la cadena s_search_in_soup
     precio = float(search_in_soup[inicio:inicio + 5])
-    # print(f'El precio en la página oficial de Apple es de: ${precio}')
     return precio
 
 
@@ -66,6 +64,7 @@ def precio_ishop():
 
     url_ishop = 'https://www.ishopmixup.com/airpods-estuche-carga/p'
     request_ishop = request(url_ishop)
+    # archivo(request_ishop) # Escribe el archivo con el codigo html
 
     # Iniciamos la búsqueda particular
     search_in_soup = str(request_ishop.find('script', attrs={
@@ -74,7 +73,6 @@ def precio_ishop():
     patron = re.compile(r'\bprice":\b')  # Genera el patron que se desea buscar
     inicio = patron.search(search_in_soup).end()
     precio = float(search_in_soup[inicio:inicio + 4])
-    # print(f"El precio en ishop es de: ${precio}")
     return precio
 
 
@@ -90,7 +88,6 @@ def precio_ph():
     for p in l_precio[0:2]:
         precio = precio + p
     precio = float(precio)
-    # print(f"El precio en Palacio de Hierro es de: ${precio}")
     return precio
 
 
