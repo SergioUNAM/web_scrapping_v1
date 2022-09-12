@@ -31,7 +31,7 @@ def request(url):
 def precio_ml():
     # Funcion que obtiene el precio en mercado libre
 
-    url_mercado_libre = 'https://www.mercadolibre.com.mx/apple-airpods-con-estuche-de-carga-blanco/p/MLM15914456?hide_psmb=true#reco_item_pos=0&reco_backend=best-seller&reco_backend_type=low_level&reco_client=highlights-rankings&reco_id=0f8a0e0d-0157-4194-8c5a-403f14435d7c&tendency_print_id=74bbbcf3-df2c-4a1c-a28b-ed6777faa694'
+    url_mercado_libre = 'https://www.mercadolibre.com.mx/apple-airpods-con-estuche-de-carga-blanco/p/MLM15914456?pdp_filters=category:MLM1000%7Cofficial_store:3953#searchVariation=MLM15914456&position=7&search_layout=grid&type=product&tracking_id=838afa43-81e3-4eb2-9068-3dcf85bb53d8'
 
     request_ml = request(url_mercado_libre)  # Llamamos a la función request para realizar la consulta de mercado libre
 
