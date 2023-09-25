@@ -4,6 +4,7 @@ import re
 from datetime import datetime
 
 
+
 def archivo(soup):
     # Función que escribe en un archivo html el resultado de la consulta para poder visualizarlo
 
